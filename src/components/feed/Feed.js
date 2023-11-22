@@ -15,10 +15,13 @@ import {
   serverTimestamp,
   orderBy,
 } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
 
 function Feed() {
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     onSnapshot(
@@ -38,10 +41,10 @@ function Feed() {
     e.preventDefault();
 
     addDoc(collection(db, "posts"), {
-      name: "Andreas-Robert Stoia",
-      description: "Software Engineer",
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: "",
+      photoUrl: user.photoUrl,
       timestamp: serverTimestamp(),
     });
 

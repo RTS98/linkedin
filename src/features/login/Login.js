@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { auth } from "../../api/firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../userSlice";
 
@@ -38,6 +42,18 @@ function Login() {
 
   const signIn = (e) => {
     e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            displayName: userAuth.user.displayName,
+            uid: userAuth.user.uid,
+            profilePicture: userAuth.user.photoURL,
+          })
+        );
+      })
+      .catch((error) => alert(error));
   };
 
   return (
@@ -71,7 +87,7 @@ function Login() {
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-        <button type="submit" onClick={login}>
+        <button type="submit" onClick={signIn}>
           Sign in
         </button>
       </form>

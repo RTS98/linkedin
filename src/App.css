@@ -2,10 +2,23 @@
   margin: 0;
 }
 
+body { 
+  overscroll-behavior-y: none;
+}
+
 .App {
   background-color: #f3f2ef;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app__body {
   display: flex;  
+  margin-top: 35px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: 20px;
+  margin-right: 20px;
 }

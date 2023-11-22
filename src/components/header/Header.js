@@ -7,8 +7,19 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/userSlice";
+import { signOut } from "firebase/auth";
+import { auth } from "../../api/firebase";
 
 function Header() {
+  const dispatch = useDispatch();
+
+  const signOutApp = () => {
+    dispatch(logout());
+    signOut(auth);
+  };
+
   return (
     <div className="header">
       <div className="header__left">
@@ -29,10 +40,7 @@ function Header() {
         <HeaderOption Icon={BusinessCenterIcon} title="Jobs" />
         <HeaderOption Icon={ChatIcon} title="Messaging" />
         <HeaderOption Icon={NotificationsIcon} title="My Notification" />
-        <HeaderOption
-          avatar="https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"
-          title="My Notification"
-        />
+        <HeaderOption avatar={true} title="Me" onClick={signOutApp} />
       </div>
     </div>
   );
